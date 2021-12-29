@@ -1,0 +1,17 @@
+.main {
+  height: 100%;
+  display: flex;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+  font: calibri;
+  font-size: large;
+  background-color: white;
+  opacity: 70%;
+  width: 50%;
+  height: 100vh;
+  z-index: 3;
+  position: relative;
+}
