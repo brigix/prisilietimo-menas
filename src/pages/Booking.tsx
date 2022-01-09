@@ -1,10 +1,10 @@
+import { SetStateAction, useState } from "react";
 import Calendar, { CalendarTileProperties } from "react-calendar";
-import React, { SetStateAction, useState } from "react";
 import "react-calendar/dist/Calendar.css";
 
 const Booking = () => {
   const initial = new Date(Date.now());
-  const [selectedDate, setSelectedDate] = React.useState<Date>(initial);
+  const [selectedDate, setSelectedDate] = useState<Date>(initial);
 
   const disabledDates: Date[] = [
     new Date(2022, 0, 20),
@@ -12,13 +12,18 @@ const Booking = () => {
     new Date(2022, 0, 23),
   ];
 
-  const onChange = (nextValue: React.SetStateAction<Date>) => {
+  const onChange = (nextValue: SetStateAction<Date>) => {
     setSelectedDate(nextValue);
   };
 
   const isSameDate = (date1: Date, date2: Date) => {
     if (date1.getTime() === date2.getTime()) {
-      console.log(date2);
+      return true;
+    } else return false;
+  };
+
+  const isPastDate = (date1: Date) => {
+    if (date1.getTime() < Date.now()) {
       return true;
     } else return false;
   };
@@ -27,7 +32,10 @@ const Booking = () => {
     // Disable tiles in month view only
     if (view === "month") {
       // Check if a date React-Calendar wants to check is on the list of disabled dates
-      if (disabledDates.find((dDate) => isSameDate(dDate, date))) {
+      if (
+        disabledDates.find((dDate) => isSameDate(dDate, date)) ||
+        isPastDate(date)
+      ) {
         return true;
       } else return false;
     } else return false;
@@ -46,6 +54,7 @@ const Booking = () => {
 
   return (
     <div className="main">
+      <h3>Registration</h3>
       <div className="calendar">
         <Calendar
           onChange={onChange}
@@ -54,15 +63,7 @@ const Booking = () => {
           tileClassName={tileClassName}
         />
       </div>
-      <div className="data">
-        {selectedDate.toString()}
-        <p>disabled dates: </p>
-        <div>
-          {disabledDates.map((d) => (
-            <p>{d.toString()}</p>
-          ))}
-        </div>
-      </div>
+      <div className="data">{selectedDate.toString()}</div>
     </div>
   );
 };
