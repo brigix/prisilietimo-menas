@@ -2,27 +2,26 @@ import { NavLink } from "react-router-dom";
 import Logo from "../Logo/Logo";
 import "./NavigationBar.css";
 
-
 const NavigationBar = () => {
   return (
     <div>
-        <div className="logo">
+      <div className="logo">
         <Logo />
       </div>
       <header className="header">
         <nav>
           <ul>
             <li>
-              <NavLink to="/">Home</NavLink>
+              <NavLink to="/">Pradžia</NavLink>
             </li>
             <li>
-              <NavLink to="/About">About</NavLink>
+              <NavLink to="/About">Paslaugos</NavLink>
             </li>
             <li>
-              <NavLink to="/Booking">Booking</NavLink>
+              <NavLink to="/Booking">Registracija</NavLink>
             </li>
             <li>
-              <NavLink to="/Contact">Contact</NavLink>
+              <NavLink to="/Contact">Susisiekite</NavLink>
             </li>
           </ul>
         </nav>

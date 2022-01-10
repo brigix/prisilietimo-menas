@@ -1,6 +1,7 @@
 import { SetStateAction, useState } from "react";
 import Calendar, { CalendarTileProperties } from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import WorkPlaces from "../components/FormElements/WorkPlaces";
 
 const Booking = () => {
   const initial = new Date(Date.now());
@@ -43,7 +44,7 @@ const Booking = () => {
 
   const tileClassName = ({ date, view }: CalendarTileProperties) => {
     // Add class to tiles in month view only
-    const classNameFree: string = "react-calendar__tile--freeDate";
+    const classNameFree: string = "react-calendar button Lapes";
     if (view === "month") {
       // Check if a date React-Calendar wants to check is on the list of dates to add class to
       if (disabledDates.find((dDate: Date) => isSameDate(dDate, date))) {
@@ -54,16 +55,21 @@ const Booking = () => {
 
   return (
     <div className="main">
-      <h3>Registration</h3>
+      <h3>Registracija</h3>
       <div className="calendar">
         <Calendar
           onChange={onChange}
           value={selectedDate}
           tileDisabled={tileDisabled}
           tileClassName={tileClassName}
+          locale="lt-LT"
         />
       </div>
+      <form>
+        <WorkPlaces />
+      </form>
       <div className="data">{selectedDate.toString()}</div>
+      <div className="data"></div>
     </div>
   );
 };
