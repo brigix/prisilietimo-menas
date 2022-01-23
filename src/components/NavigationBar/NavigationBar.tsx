@@ -23,6 +23,9 @@ const NavigationBar = () => {
             <li>
               <NavLink to="/Contact">Susisiekite</NavLink>
             </li>
+            <li>
+              <NavLink to="/Login">Prisijungti</NavLink>
+            </li>
           </ul>
         </nav>
       </header>

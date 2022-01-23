@@ -2,5 +2,6 @@
   text-align: center;
 }
 body {
-  background-color: hsl(322, 71%, 79%);
+  background-color: hsl(0, 0%, 100%);
+  color: rgb(23, 74, 112);
 }

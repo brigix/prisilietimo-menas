@@ -1,0 +1,38 @@
+Button {
+  background-color: #f0d822;
+  color: black;
+  height: 40px;
+  border-radius: 50px;
+  stroke-width: 0px;
+  border-style: none;
+  transition: 0.2s ease-in-out;
+  transition-property: all;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+  transition-delay: 0s;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+  font-weight: bolder;
+  line-height: 1.5;
+  margin: 2px;
+  margin-bottom: 20px;
+}
+.Button-Large {
+  width: 210px;
+}
+.Button-Small {
+  width: 50px;
+  height: 30px;
+  margin: 2px;
+}
+Button:hover {
+  background-color: rgb(34, 108, 165);
+  color: rgb(255, 255, 255);
+}
+Button:disabled,
+Button:disabled:hover,
+Button:disabled:active {
+  background-color: none;
+  color: rgb(109, 108, 108);
+  cursor: not-allowed;
+}
