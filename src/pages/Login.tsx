@@ -1,44 +1,86 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Button from "../components/FormElements/Button/Button";
 import TextInput from "../components/FormElements/TextInput";
 import "./Pages.css";
+import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import AuthContext from "../Context";
 
 const Login = () => {
-  const [userName, setUserName] = useState<string>("");
+  const [userEmail, setUserEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const auth = getAuth();
+  const ctx = useContext(AuthContext);
 
-  const formSubmissionHandler = (event: React.FormEvent<HTMLFormElement>) => {
+  const logInHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setIsLoggedIn(true);
+    signInWithEmailAndPassword(auth, userEmail, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        console.log(user.email);
+        ctx.isLoggedIn = true;
+        
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        ctx.isLoggedIn = false;
+      });
   };
 
-  const enterUserName = (userName: string) => {
-    setUserName(userName);
+  const enterUserEmail = (userEmail: string) => {
+    setUserEmail(userEmail);
   };
   const enterPassword = (password: string) => {
     setPassword(password);
   };
 
+  const logOutHandler = () => {
+    signOut(auth)
+      .then(() => {
+        ctx.isLoggedIn = false;
+        // Sign-out successful.
+      })
+      .catch((error) => {
+        // An error happened.
+      });
+  };
+
   return (
     <div className="main">
       <div className="flex-form">
-        <form onSubmit={formSubmissionHandler}>
+        <form>
           <TextInput
-            textInputName="Vartotojo vardas"
-            enterText={enterUserName}
-            value={userName}
+            textInputName="Vartotojo el. paštas"
+            enterText={enterUserEmail}
+            value={userEmail}
           />
           <TextInput
             textInputName="Slaptažodis"
             enterText={enterPassword}
             value={password}
           />
-          <Button name="Prisijungti" size="Button-Large" disabled={false} />
+          {ctx.isLoggedIn === true ? (
+            <Button
+              name="Atsijungti"
+              size="Button-Large"
+              disabled={false}
+              onClick={logOutHandler}
+            />
+          ) : (
+            <Button
+              name="Prisijungti"
+              size="Button-Large"
+              disabled={false}
+              onClick={logInHandler}
+            />
+          )}
+          <div></div>
         </form>
       </div>
-      Username: {userName} password: {password}
-      {isLoggedIn === true ? <h4>is Logged</h4> : <h4>not Logged</h4>}
+      Username: {userEmail} password: {password} : {ctx.isLoggedIn.toString()}
+      {ctx.isLoggedIn === true ? <h4>is Logged</h4> : <h4>not Logged</h4>}
     </div>
   );
 };

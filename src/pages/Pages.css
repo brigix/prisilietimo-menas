@@ -51,7 +51,7 @@ h3 {
 .flex-form {
   align-content: stretch;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   height: auto;
   justify-content: center;
   align-items: strech;

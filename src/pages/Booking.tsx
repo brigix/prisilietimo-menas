@@ -17,17 +17,21 @@ const db = getFirestore(app);
 const Booking = () => {
   const initial = new Date(Date.now());
   const [selectedDate, setSelectedDate] = useState<Date>(initial);
-  const [submitedSuccess, setSubmitedSuccess] = useState(false);
+  const [submitedSuccess, setSubmitedSuccess] = useState<boolean>(false);
   const [cabinet, setCabinet] = useState<string>("");
-  const [bookingStage, setBookingStage] = useState(false);
+  const [bookingStage, setBookingStage] = useState<boolean>(false);
   const [clientName, setClientName] = useState<string>("");
   const [phone, setPhone] = useState<number>(370);
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onNextClick = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setBookingStage(true);
+  };
+
+  const onConfirmBooking = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     BookingService.getAll(db);
     setSubmitedSuccess(true);
-    setBookingStage(true);
   };
 
   const chooseCabinet = (cabinet: string) => {
@@ -46,7 +50,7 @@ const Booking = () => {
   return (
     <div className="main">
       <h3>Registracija</h3>
-      <form onSubmit={onSubmit}>
+      <form>
         {bookingStage === false ? (
           <>
             <div className="date-time">
@@ -54,6 +58,12 @@ const Booking = () => {
               <TimeSelection />
             </div>
             <WorkPlaces chooseCabinet={chooseCabinet} />
+            <Button
+              name="Toliau"
+              size="Button-Large"
+              disabled={false}
+              onClick={onNextClick}
+            />
           </>
         ) : (
           <>
@@ -63,9 +73,14 @@ const Booking = () => {
               value={clientName}
             />
             <PhoneInput enterPhone={enterPhone} value={phone} />
+            <Button
+              name="Registruotis"
+              size="Button-Large"
+              disabled={false}
+              onClick={onConfirmBooking}
+            />
           </>
         )}
-        <Button name="Toliau" size="Button-Large" disabled={false} />
       </form>
       <div>
         {submitedSuccess === true ? (

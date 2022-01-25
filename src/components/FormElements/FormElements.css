@@ -12,19 +12,19 @@
   text-align: left;
 }
 
-input {
+.input {
   color: black;
   height: 20px;
   stroke-width: 0px;
   border-style: none;
   outline: none;
 }
-input[type="text"]:focus {
+.input[type="text"]:focus {
   background-color: rgb(162, 195, 220);
   outline: none;
   border-style: none;
 }
-input[type="number"]:focus {
+.input[type="number"]:focus {
   background-color: rgb(162, 195, 220);
   outline: none;
   border-style: none;

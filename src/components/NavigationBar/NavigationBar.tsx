@@ -1,8 +1,13 @@
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import AuthContext from "../../Context";
+
 import Logo from "../Logo/Logo";
 import "./NavigationBar.css";
 
 const NavigationBar = () => {
+  const ctx = useContext(AuthContext);
+
   return (
     <div>
       <div className="logo">
@@ -24,7 +29,11 @@ const NavigationBar = () => {
               <NavLink to="/Contact">Susisiekite</NavLink>
             </li>
             <li>
-              <NavLink to="/Login">Prisijungti</NavLink>
+              {ctx.isLoggedIn === true ? (
+                <h4>Atsijungti</h4>
+              ) : (
+                <NavLink to="/Login">Prisijungti</NavLink>
+              )}
             </li>
           </ul>
         </nav>
