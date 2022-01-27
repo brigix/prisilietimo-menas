@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from "react";
-import AviableBookingModel from "../../models/BookingModel";
+import { useEffect, useState } from "react";
 import { BookingService } from "../../services/BookingService";
 import "./FormElements.css";
 
-const TimeSelection = (props: { selectedDate: Date }) => {
+const TimeSelection = (props: { selectedDate: Date; cabinet: string }) => {
   const initial = new Date(Date.now());
   const [timesByDate, setTimesByDate] = useState<string[]>([]);
   const [prevDate, setPrevDate] = useState<Date>(initial);
+  const [prevCabinet, setPrevCabinet] = useState<string>("");
 
-  const TimesByDate = async () => {
-    const datesArr = await BookingService.getByDate(props.selectedDate);
+  const TimesByDateByCabinet = async () => {
+    const datesArr = await BookingService.getByDateByCabinet(
+      props.selectedDate,
+      props.cabinet
+    );
     let timeArr: string[] = [];
     if (datesArr != null) {
       datesArr.forEach((date) => {
@@ -38,14 +41,16 @@ const TimeSelection = (props: { selectedDate: Date }) => {
 
   useEffect(() => {
     setPrevDate(props.selectedDate);
-    TimesByDate();
+    setPrevCabinet(props.cabinet);
+    TimesByDateByCabinet();
   }, []);
 
   const IsDateChanged = () => {
     useEffect(() => {
-      if (props.selectedDate !== prevDate) {
-        TimesByDate();
+      if (props.selectedDate !== prevDate || props.cabinet !== prevCabinet) {
+        TimesByDateByCabinet();
         setPrevDate(props.selectedDate);
+        setPrevCabinet(props.cabinet);
       }
     }, []);
     //

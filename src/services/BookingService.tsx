@@ -3,7 +3,6 @@ import AviableBookingModel from "../models/BookingModel";
 import { getFirestore } from "@firebase/firestore";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../config.js";
-import { useState } from "react";
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -28,7 +27,7 @@ const getAll = async () => {
     aviableDates.push(aviableDate);
     aviableDates.map((atr) =>
       console.log("all aviable dates:" + atr.date, atr.location)
-    )
+    );
   });
 
   return aviableDates;
@@ -71,8 +70,37 @@ async function getByDate(date: Date): Promise<AviableBookingModel[] | null> {
   }
 }
 
+async function getByDateByCabinet(
+  date: Date,
+  cabinet: String
+): Promise<AviableBookingModel[] | null> {
+  let aviableTimesResolved: AviableBookingModel[] = [];
+  try {
+    const AllAviableDates: AviableBookingModel[] =
+      await BookingService.getAll();
+
+    AllAviableDates.forEach((bs) => {
+      console.log(bs.location);
+      if (
+        isSameDay(bs.date, date) &&
+        isBookingModel(bs) &&
+        bs.location === cabinet
+      ) {
+        aviableTimesResolved.push(bs);
+      }
+    });
+    aviableTimesResolved.map((atr) =>
+      console.log("selected by date " + date + "--->" + atr.date + atr.location)
+    );
+    return aviableTimesResolved;
+  } catch (error) {
+    return null;
+  }
+}
+
 export const BookingService = {
   add,
   getAll,
   getByDate,
+  getByDateByCabinet,
 };

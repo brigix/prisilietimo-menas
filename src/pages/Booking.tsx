@@ -61,7 +61,10 @@ const Booking = () => {
               <CalendarElement chooseDate={chooseDate} value={selectedDate} />
               {showTimes ? (
                 <>
-                  <TimeSelection selectedDate={selectedDate} />
+                  <TimeSelection
+                    selectedDate={selectedDate}
+                    cabinet={cabinet}
+                  />
                 </>
               ) : (
                 <>
