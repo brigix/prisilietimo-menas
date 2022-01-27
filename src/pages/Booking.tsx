@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Button from "../components/FormElements/Button/Button";
 import CalendarElement from "../components/FormElements/CalendarElement";
@@ -37,12 +37,12 @@ const Booking = () => {
   };
 
   const chooseCabinet = (cabinet: string) => {
-    setCabinet(cabinet);
     onShowTimes();
+    setCabinet(cabinet);
   };
   const chooseDate = (date: Date) => {
-    setSelectedDate(date);
     onShowTimes();
+    setSelectedDate(date);
   };
   const enterClientName = (clientName: string) => {
     setClientName(clientName);

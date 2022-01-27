@@ -28,19 +28,13 @@ const getAll = async () => {
     aviableDates.push(aviableDate);
     aviableDates.map((atr) =>
       console.log("all aviable dates:" + atr.date, atr.location)
-    );
-    //  let date = doc.data().bookDate.toDate();
-    //  console.log(
-    //    `${doc.id} =>  BookDate: ${doc.data().bookDate}
-    //    Location: ${doc.data().location} ${date}`
-    //  );
+    )
   });
 
   return aviableDates;
 };
 
 const isSameDay = (date1: Date, date2: Date) => {
-  console.log("is same date: ", date1.getDay, date2.getDay);
   if (
     date1.getFullYear() === date2.getFullYear() &&
     date1.getMonth() === date2.getMonth() &&
@@ -68,9 +62,6 @@ async function getByDate(date: Date): Promise<AviableBookingModel[] | null> {
         aviableTimesResolved.push(bs);
       }
     });
-    // Promise.all(aviableTimes).then((values) => {
-    //    aviableTimesResolved = values;
-    //  });
     aviableTimesResolved.map((atr) =>
       console.log("selected by date " + date + "--->" + atr.date + atr.location)
     );
