@@ -18,7 +18,7 @@ const Login = () => {
         // Signed in
         const user = userCredential.user;
         console.log(user.email);
-        ctx.isLoggedIn = true;
+        ctx.toggleLogged();
         
         // ...
       })

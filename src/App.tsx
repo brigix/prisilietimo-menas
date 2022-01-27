@@ -8,7 +8,7 @@ import { useState } from "react";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const toggleLogged = () => {
-    setIsLoggedIn(isLoggedIn);
+    setIsLoggedIn(!isLoggedIn);
   };
 
   return (

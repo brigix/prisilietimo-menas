@@ -3,6 +3,10 @@ import "./FormElements.css";
 const WorkPlaces = ({ chooseCabinet }: any) => {
   const cabinets: string[] = ["Kaunas, Ukmergės g.", "Lapės, Panerių g."];
 
+  const handleOnSelectCabinet = (cabinet: string) => {
+    chooseCabinet(cabinet);
+  };
+
   return (
     <div className="workplaces">
       <h4>Pasirinkite paslaugos vietą:</h4>
@@ -15,7 +19,7 @@ const WorkPlaces = ({ chooseCabinet }: any) => {
               name="cabinet"
               value={cabinet}
               key={"input" + { cabinet }}
-              onClick={() => chooseCabinet(cabinet)}
+              onClick={() => handleOnSelectCabinet(cabinet)}
             />
             <label htmlFor={cabinet} key={"label" + { cabinet }}>
               {cabinet}

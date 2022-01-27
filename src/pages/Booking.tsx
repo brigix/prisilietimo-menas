@@ -6,13 +6,6 @@ import PhoneInput from "../components/FormElements/PhoneInput";
 import TextInput from "../components/FormElements/TextInput";
 import TimeSelection from "../components/FormElements/TimeSelection";
 import WorkPlaces from "../components/FormElements/WorkPlaces";
-import { BookingService } from "../services/BookingService";
-import { getFirestore } from "@firebase/firestore";
-import { initializeApp } from "firebase/app";
-import { firebaseConfig } from "../config.js";
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
 
 const Booking = () => {
   const initial = new Date(Date.now());
@@ -22,6 +15,7 @@ const Booking = () => {
   const [bookingStage, setBookingStage] = useState<boolean>(false);
   const [clientName, setClientName] = useState<string>("");
   const [phone, setPhone] = useState<number>(370);
+  const [showTimes, setShowTimes] = useState<boolean>(false);
 
   const onNextClick = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -30,15 +24,25 @@ const Booking = () => {
 
   const onConfirmBooking = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    BookingService.getAll(db);
     setSubmitedSuccess(true);
+  };
+
+  const onShowTimes = () => {
+    if (
+      cabinet === "Kaunas, Ukmergės g." ||
+      (cabinet === "Lapės, Panerių g." && selectedDate != null)
+    ) {
+      setShowTimes(true);
+    }
   };
 
   const chooseCabinet = (cabinet: string) => {
     setCabinet(cabinet);
+    onShowTimes();
   };
   const chooseDate = (date: Date) => {
     setSelectedDate(date);
+    onShowTimes();
   };
   const enterClientName = (clientName: string) => {
     setClientName(clientName);
@@ -55,7 +59,15 @@ const Booking = () => {
           <>
             <div className="date-time">
               <CalendarElement chooseDate={chooseDate} value={selectedDate} />
-              <TimeSelection />
+              {showTimes ? (
+                <>
+                  <TimeSelection selectedDate={selectedDate} />
+                </>
+              ) : (
+                <>
+                  <h4>prašome pasirinkti datą ir kabinetą!</h4>
+                </>
+              )}
             </div>
             <WorkPlaces chooseCabinet={chooseCabinet} />
             <Button
@@ -98,5 +110,4 @@ const Booking = () => {
     </div>
   );
 };
-
 export default Booking;

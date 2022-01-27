@@ -1,5 +1,8 @@
-import React, { Component } from 'react';
-
-export default class BookingModel extends Component {
- 
+export default class AviableBookingModel {
+  date: Date;
+  location: string;
+  constructor(date: Date, location: string) {
+    this.date = date;
+    this.location = location;
+  }
 }

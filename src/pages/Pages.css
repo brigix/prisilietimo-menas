@@ -14,11 +14,80 @@
   z-index: 3;
   position: relative;
 }
+.main-contact {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  margin: auto;
+  align-items: center;
+  font: calibri;
+  font-size: large;
+  background-color: white;
+  opacity: 100%;
+  width: 50%;
+  height: 100vh;
+  z-index: 3;
+  position: relative;
+}
+.img-contact {
+  background-color: white;
+  opacity: 100%;
+  height: 40%;
+  width: 100%;
+  margin: 40px;
+  object-fit: cover;
+}
+.hero-text {
+  text-align: left;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  margin-left: 0;
+}
+.hero-text {
+  font-size: 12vh;
+  margin-bottom: 0;
+  margin-left: 0;
+  font-family: CalibriLight;
+  line-height: 0.7;
+  text-align: left;
+}
+.hero-text p {
+  font-size: 4vh;
+  color: black;
+  width: 100%;
+  margin-left: 10px;
+  padding-left: 5px;
+  margin-top: 20px;
+  padding: 10px;
+  font-family: BiloxiScript;
+  line-height: 0.8;
+  border-left: 5px solid white;
+  height: 100%;
+}
+@font-face {
+  font-family: BiloxiScript;
+  src: url("../assets/Biloxi-Script.ttf");
+}
+@font-face {
+  font-family: CalibriLight;
+  src: url("../assets/Calibri-Light.ttf");
+}
 .calendar {
   height: fit-content;
 }
 h3 {
   margin-top: 0px;
+}
+ul {
+  text-align: left;
+}
+p {
+  margin: 40px;
+  text-align: justify;
 }
 .freeDate {
   background-color: rgb(145, 223, 141);

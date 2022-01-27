@@ -1,34 +1,45 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import AviableBookingModel from "../../models/BookingModel";
+import { BookingService } from "../../services/BookingService";
 import "./FormElements.css";
 
-const TimeSelection = () => {
-  const aviableDates: Date[] = [
-    new Date(2022, 0, 25, 11, 0),
-    new Date(2022, 0, 25, 13, 0),
-    new Date(2022, 0, 25, 14, 30),
-    new Date(2022, 0, 26, 9, 0),
-    new Date(2022, 0, 26, 10, 30),
-    new Date(2022, 0, 26, 16, 30),
-  ];
+const TimeSelection = (props: { selectedDate: Date }) => {
+  const [timesByDate, setTimesByDate] = useState<string[]>([]);
 
-  const aviableDatesStr: string[] = [
-    "2022, 0, 25, 11, 0",
-    "2022, 0, 25, 13, 0",
-    "2022, 0, 25, 14, 30",
-    "2022, 0, 26, 9, 0",
-  ];
-  function chooseTime(time: string): void {
+  const TimesByDate = async () => {
+    const datesArr = await BookingService.getByDate(props.selectedDate);
+    let timeArr: string[] = [];
+    if (datesArr != null) {
+      datesArr.forEach((date) => {
+        timeArr.push(TimeToString(date.date));
+      });
+    } else {
+      timeArr = [];
+    }
+    setTimesByDate(timeArr);
+    console.log("timeArr: ", timeArr);
+  };
+
+  const chooseTime = (time: string) => {
     throw new Error("Function not implemented.");
-  }
+  };
+
   const TimeToString = (time: Date) => {
-    const timeStr: string = time.toISOString();
+    const timeStr: string =
+      time.getHours().toString() + "." + time.getMinutes().toString();
     return timeStr;
   };
+
+  useEffect(() => {
+    TimesByDate();
+  }, []);
+
+  //
   return (
     <div className="time">
       <h4>Laiko pasirinkimai: </h4>
       <div className="container-time">
-        {aviableDatesStr.map((time) => (
+        {timesByDate.map((time) => (
           <div key={time}>
             <input
               type="radio"
