@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import BookingTimeLocation from "../components/FormElements/BookingTimeLocation";
 
 import Button from "../components/FormElements/Button/Button";
 import CalendarElement from "../components/FormElements/CalendarElement";
@@ -16,6 +17,8 @@ const Booking = () => {
   const [clientName, setClientName] = useState<string>("");
   const [phone, setPhone] = useState<number>(370);
   const [showTimes, setShowTimes] = useState<boolean>(false);
+  const [chosenDateTime, setChosenDateTime] = useState<Date>();
+  const [allSelected, setAllSelected] = useState<boolean>(false);
 
   const onNextClick = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -36,12 +39,29 @@ const Booking = () => {
     }
   };
 
+  const checkSelected = () => {
+    if (
+      cabinet !== "" &&
+      chosenDateTime !== null &&
+      chosenDateTime !== undefined
+    ) {
+      setAllSelected(true);
+    } else setAllSelected(false);
+  };
+
   const chooseCabinet = (cabinet: string) => {
     onShowTimes();
+    checkSelected();
     setCabinet(cabinet);
+  };
+
+  const chooseDateTime = (dateTime: Date) => {
+    checkSelected();
+    setChosenDateTime(dateTime);
   };
   const chooseDate = (date: Date) => {
     onShowTimes();
+    checkSelected();
     setSelectedDate(date);
   };
   const enterClientName = (clientName: string) => {
@@ -57,6 +77,7 @@ const Booking = () => {
       <form>
         {bookingStage === false ? (
           <>
+            <WorkPlaces chooseCabinet={chooseCabinet} />
             <div className="date-time">
               <CalendarElement chooseDate={chooseDate} value={selectedDate} />
               {showTimes ? (
@@ -64,21 +85,31 @@ const Booking = () => {
                   <TimeSelection
                     selectedDate={selectedDate}
                     cabinet={cabinet}
+                    chooseDateTime={chooseDateTime}
                   />
                 </>
               ) : (
                 <>
-                  <h4>prašome pasirinkti datą ir kabinetą!</h4>
+                  <h4>Pasirinkite datą ir kabinetą.</h4>
                 </>
               )}
             </div>
-            <WorkPlaces chooseCabinet={chooseCabinet} />
-            <Button
-              name="Toliau"
-              size="Button-Large"
-              disabled={false}
-              onClick={onNextClick}
-            />
+            {allSelected ? (
+              <>
+                <BookingTimeLocation
+                  cabinet={cabinet}
+                  dateTime={chosenDateTime}
+                />
+                <Button
+                  name="Toliau"
+                  size="Button-Large"
+                  disabled={false}
+                  onClick={onNextClick}
+                />
+              </>
+            ) : (
+              <h4>Pasirinkite, kabinetą, dieną, ir laiką.</h4>
+            )}
           </>
         ) : (
           <>
@@ -101,8 +132,7 @@ const Booking = () => {
         {submitedSuccess === true ? (
           <>
             <h4>Registracija sėkiminga!</h4>
-            <div className="data">{selectedDate.toString()}</div>
-            <div className="data">Kabinetas: {cabinet}</div>
+            <BookingTimeLocation cabinet={cabinet} dateTime={chosenDateTime} />
             <div className="data">Vardas: {clientName}</div>
             <div className="data">Tel. nr: {phone}</div>
           </>

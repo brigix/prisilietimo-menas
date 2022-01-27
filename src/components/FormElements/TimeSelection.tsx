@@ -2,11 +2,16 @@ import { useEffect, useState } from "react";
 import { BookingService } from "../../services/BookingService";
 import "./FormElements.css";
 
-const TimeSelection = (props: { selectedDate: Date; cabinet: string }) => {
+const TimeSelection = (props: {
+  selectedDate: Date;
+  cabinet: string;
+  chooseDateTime: any;
+}) => {
   const initial = new Date(Date.now());
   const [timesByDate, setTimesByDate] = useState<string[]>([]);
   const [prevDate, setPrevDate] = useState<Date>(initial);
   const [prevCabinet, setPrevCabinet] = useState<string>("");
+  const [noTimesAviable, setNoTimesAviable] = useState<boolean>(true);
 
   const TimesByDateByCabinet = async () => {
     const datesArr = await BookingService.getByDateByCabinet(
@@ -18,15 +23,31 @@ const TimeSelection = (props: { selectedDate: Date; cabinet: string }) => {
       datesArr.forEach((date) => {
         timeArr.push(TimeToString(date.date));
       });
+      setNoTimesAviable(false);
     } else {
       timeArr = [];
     }
+    if (timeArr.length === 0) {
+      setNoTimesAviable(true);
+    }
     setTimesByDate(timeArr);
-    console.log("timeArr: ", timeArr);
   };
 
   const chooseTime = (time: string) => {
-    throw new Error("Function not implemented.");
+    const chosenDateTime: Date = new Date(
+      props.selectedDate.setHours(
+        parseTime(time).hours,
+        parseTime(time).minutes
+      )
+    );
+    props.chooseDateTime(chosenDateTime);
+  };
+
+  const parseTime = (time: string) => {
+    const timeSplitArr: string[] = time.split(":");
+    const hours: number = parseInt(timeSplitArr[0]);
+    const minutes: number = parseInt(timeSplitArr[1]);
+    return { hours, minutes };
   };
 
   const TimeToString = (time: Date) => {
@@ -35,7 +56,7 @@ const TimeSelection = (props: { selectedDate: Date; cabinet: string }) => {
     if (time.getMinutes() === 0) {
       minutes = "00";
     } else minutes = time.getMinutes().toString();
-    timeStr = time.getHours().toString() + "." + minutes;
+    timeStr = time.getHours().toString() + ":" + minutes;
     return timeStr;
   };
 
@@ -78,6 +99,7 @@ const TimeSelection = (props: { selectedDate: Date; cabinet: string }) => {
             </label>
           </div>
         ))}
+        {noTimesAviable === true ? <h4>Atsiprašome, užimta</h4> : <h4></h4>}
       </div>
     </div>
   );
