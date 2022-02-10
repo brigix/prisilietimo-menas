@@ -6,7 +6,7 @@ interface IAuthContext {
 }
 
 const defaultState = {
-  isLoggedIn: false,
+  isLoggedIn: true,
   toggleLogged: () => {},
 };
 

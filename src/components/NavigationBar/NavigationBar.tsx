@@ -1,3 +1,4 @@
+import { getAuth, signOut } from "firebase/auth";
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import AuthContext from "../../Context";
@@ -7,6 +8,19 @@ import "./NavigationBar.css";
 
 const NavigationBar = () => {
   const ctx = useContext(AuthContext);
+  const auth = getAuth();
+
+  const logOutHandler = () => {
+    signOut(auth)
+      .then(() => {
+        ctx.toggleLogged();
+        // Sign-out successful.
+      })
+      .catch((error) => {
+        ctx.isLoggedIn = false;
+        // An error happened.
+      });
+  };
 
   return (
     <div>
@@ -28,13 +42,21 @@ const NavigationBar = () => {
             <li>
               <NavLink to="/Contact">Susisiekite</NavLink>
             </li>
-            <li>
-              {ctx.isLoggedIn === true ? (
-                <h4>Atsijungti</h4>
-              ) : (
-                <NavLink to="/Login">Prisijungti</NavLink>
-              )}
-            </li>
+
+            {ctx.isLoggedIn === true ? (
+              <>
+                <li>
+                  <NavLink to="/Login" onClick={logOutHandler}>
+                    Atsijungti
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/Admin">Tvarkyklė</NavLink>
+                </li>
+              </>
+            ) : (
+              <NavLink to="/Login">Prisijungti</NavLink>
+            )}
           </ul>
         </nav>
       </header>

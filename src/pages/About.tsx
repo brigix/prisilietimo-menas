@@ -1,3 +1,6 @@
+import { NavLink } from "react-router-dom";
+import Button from "../components/FormElements/Button/Button";
+
 const About = () => {
   return (
     <div className="main">
@@ -27,6 +30,16 @@ const About = () => {
         kūno lengvumo pojūtį. Galima rinktis viso kūno gydomuosius ar
         atpalaiduojančius, nugaros-pečių-kaklo, pėdų-galvos masažus.
       </p>
+      <div className="hero-about">
+        <p>Rinkites laika masažui jau dabar!</p>
+      </div>
+      <NavLink to="/Booking">
+        <Button
+          name="Registruotis masažui"
+          size="Button-Large"
+          disabled={false}
+        />
+      </NavLink>
     </div>
   );
 };

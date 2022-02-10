@@ -1,6 +1,6 @@
 import { useState } from "react";
 import BookingTimeLocation from "../components/FormElements/BookingTimeLocation";
-
+import { BookingService } from "../services/BookingService";
 import Button from "../components/FormElements/Button/Button";
 import CalendarElement from "../components/FormElements/CalendarElement";
 import PhoneInput from "../components/FormElements/PhoneInput";
@@ -16,6 +16,7 @@ const Booking = () => {
   const [bookingStage, setBookingStage] = useState<boolean>(false);
   const [clientName, setClientName] = useState<string>("");
   const [phone, setPhone] = useState<number>(370);
+  const [email, setEmail] = useState<string>("");
   const [showTimes, setShowTimes] = useState<boolean>(false);
   const [chosenDateTime, setChosenDateTime] = useState<Date>();
   const [allSelected, setAllSelected] = useState<boolean>(false);
@@ -27,13 +28,24 @@ const Booking = () => {
 
   const onConfirmBooking = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    saveBooking();
     setSubmitedSuccess(true);
+  };
+
+  const saveBooking = async () => {
+    await BookingService.saveBooking(
+      chosenDateTime,
+      cabinet,
+      clientName,
+      phone,
+      email
+    );
   };
 
   const onShowTimes = () => {
     if (
-      cabinet === "Kaunas, Ukmergės g." ||
-      (cabinet === "Lapės, Panerių g." && selectedDate != null)
+      cabinet === "Utenos g. 12, Kaunas" ||
+      (cabinet === "Lapės, Kauno r." && selectedDate != null)
     ) {
       setShowTimes(true);
     }
@@ -66,6 +78,9 @@ const Booking = () => {
   };
   const enterClientName = (clientName: string) => {
     setClientName(clientName);
+  };
+  const enterEmail = (email: string) => {
+    setEmail(email);
   };
   const enterPhone = (phone: number) => {
     setPhone(phone);
@@ -108,15 +123,22 @@ const Booking = () => {
                 />
               </>
             ) : (
-              <h4>Pasirinkite, kabinetą, dieną, ir laiką.</h4>
+              <></>
             )}
           </>
         ) : (
           <>
             <TextInput
-              textInputName="Vardas"
+              textInputName="Vardas:"
               enterText={enterClientName}
               value={clientName}
+              type="text"
+            />
+            <TextInput
+              textInputName="El. paštas:"
+              enterText={enterEmail}
+              value={email}
+              type="text"
             />
             <PhoneInput enterPhone={enterPhone} value={phone} />
             <Button
@@ -137,7 +159,7 @@ const Booking = () => {
             <div className="data">Tel. nr: {phone}</div>
           </>
         ) : (
-          <h2> </h2>
+          <></>
         )}
       </div>
     </div>

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./FormElements.css";
 
 const PhoneInput = (props: { enterPhone: any; value: number }) => {

@@ -5,6 +5,7 @@ const TextInput = (props: {
   textInputName: string | undefined;
   enterText: any;
   value: string;
+  type: string;
 }) => {
   const textInputChangeHandler = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -18,10 +19,10 @@ const TextInput = (props: {
         <label htmlFor={props.textInputName}>{props.textInputName}</label>
         <input
           className="input"
-          type="text"
           onChange={textInputChangeHandler}
           value={props.value}
           name={props.textInputName}
+          type={props.type}
         />
       </div>
     </div>

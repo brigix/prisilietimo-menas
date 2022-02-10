@@ -11,6 +11,21 @@
   justify-content: left;
   text-align: left;
 }
+.container-timeSelection {
+  display: flex;
+  flex-direction: row;
+  margin: 0px;
+  justify-content: space-around;
+  text-align: left;
+  border-bottom: 1px solid black;
+  padding: 2px;
+  vertical-align: top;
+  align-content: space-around;
+}
+.container-timeSelection .input[type="ckeckbox"] {
+  padding: 1px;
+  size: 10px;
+}
 
 .input {
   color: black;
@@ -25,6 +40,11 @@
   border-style: none;
 }
 .input[type="number"]:focus {
+  background-color: rgb(162, 195, 220);
+  outline: none;
+  border-style: none;
+}
+.input[type="checkbox"]:focus {
   background-color: rgb(162, 195, 220);
   outline: none;
   border-style: none;
@@ -59,3 +79,4 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+

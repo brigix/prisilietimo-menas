@@ -1,7 +1,7 @@
 import "./FormElements.css";
 
 const WorkPlaces = ({ chooseCabinet }: any) => {
-  const cabinets: string[] = ["Kaunas, Ukmergės g.", "Lapės, Panerių g."];
+  const cabinets: string[] = ["Utenos g. 12, Kaunas", "Lapės, Kauno r."];
 
   const handleOnSelectCabinet = (cabinet: string) => {
     chooseCabinet(cabinet);

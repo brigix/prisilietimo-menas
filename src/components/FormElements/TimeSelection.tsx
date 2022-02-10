@@ -21,7 +21,7 @@ const TimeSelection = (props: {
     let timeArr: string[] = [];
     if (datesArr != null) {
       datesArr.forEach((date) => {
-        timeArr.push(TimeToString(date.date));
+        timeArr.push(BookingService.timeToString(date.date));
       });
       setNoTimesAviable(false);
     } else {
@@ -30,43 +30,27 @@ const TimeSelection = (props: {
     if (timeArr.length === 0) {
       setNoTimesAviable(true);
     }
-    setTimesByDate(timeArr);
+    setTimesByDate(timeArr.sort());
   };
 
   const chooseTime = (time: string) => {
     const chosenDateTime: Date = new Date(
       props.selectedDate.setHours(
-        parseTime(time).hours,
-        parseTime(time).minutes
+        BookingService.parseTime(time).hours,
+        BookingService.parseTime(time).minutes
       )
     );
     props.chooseDateTime(chosenDateTime);
   };
 
-  const parseTime = (time: string) => {
-    const timeSplitArr: string[] = time.split(":");
-    const hours: number = parseInt(timeSplitArr[0]);
-    const minutes: number = parseInt(timeSplitArr[1]);
-    return { hours, minutes };
-  };
-
-  const TimeToString = (time: Date) => {
-    let timeStr: string = "";
-    let minutes: string = "";
-    if (time.getMinutes() === 0) {
-      minutes = "00";
-    } else minutes = time.getMinutes().toString();
-    timeStr = time.getHours().toString() + ":" + minutes;
-    return timeStr;
-  };
-
+  
   useEffect(() => {
     setPrevDate(props.selectedDate);
     setPrevCabinet(props.cabinet);
     TimesByDateByCabinet();
   }, []);
 
-  const IsDateChanged = () => {
+  const WhenDateChanged = () => {
     useEffect(() => {
       if (props.selectedDate !== prevDate || props.cabinet !== prevCabinet) {
         TimesByDateByCabinet();
@@ -83,7 +67,7 @@ const TimeSelection = (props: {
     <div className="time">
       <h4>Laiko pasirinkimai: </h4>
       <div className="container-time">
-        <IsDateChanged />
+        <WhenDateChanged />
         {timesByDate.map((time) => (
           <div key={time}>
             <input

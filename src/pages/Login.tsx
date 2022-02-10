@@ -15,12 +15,9 @@ const Login = () => {
     event.preventDefault();
     signInWithEmailAndPassword(auth, userEmail, password)
       .then((userCredential) => {
-        // Signed in
         const user = userCredential.user;
         console.log(user.email);
         ctx.toggleLogged();
-        
-        // ...
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -40,11 +37,8 @@ const Login = () => {
     signOut(auth)
       .then(() => {
         ctx.isLoggedIn = false;
-        // Sign-out successful.
       })
-      .catch((error) => {
-        // An error happened.
-      });
+      .catch((error) => {});
   };
 
   return (
@@ -55,11 +49,13 @@ const Login = () => {
             textInputName="Vartotojo el. paštas"
             enterText={enterUserEmail}
             value={userEmail}
+            type="text"
           />
           <TextInput
             textInputName="Slaptažodis"
             enterText={enterPassword}
             value={password}
+            type="password"
           />
           {ctx.isLoggedIn === true ? (
             <Button
@@ -79,8 +75,6 @@ const Login = () => {
           <div></div>
         </form>
       </div>
-      Username: {userEmail} password: {password} : {ctx.isLoggedIn.toString()}
-      {ctx.isLoggedIn === true ? <h4>is Logged</h4> : <h4>not Logged</h4>}
     </div>
   );
 };

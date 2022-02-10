@@ -1,10 +1,10 @@
 .background-image {
-  background-image: url(../../assets/cover-without-text.jpg);
+  background-image: url(../../assets/prisilietimo-menas-abstract-background.png);
   background-size: cover;
   background-repeat: no-repeat;
   position: relative;
   height: 100vh;
-  width: 100vw;
+  width: 300vh;
   background-position: center;
   z-index: 1;
 }
